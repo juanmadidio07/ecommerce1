@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom'
+import './Product.css'
 
 const Product = ({ product }) => {
     return (
-        <div className="card m-3 mt-5" style={{ width: "18rem"}}>
-            <div className='row'>
-                <div className='col'>
+        <div className="container card m-2" style={{ width: "20rem", height:"30rem"}}>
+            <Link className="btn" to={`/item/${product.id}`}>
                     <img
                         src={product.img}
                         className="card-img-top"
                         alt={product.name} />
                     <div className="card-body">
-                        <h5 className="card-title">{product.name}</h5>
-                        <p className="card-text">{product.description}</p>
-                        <Link className="btn btn-primary d-block" to={`/item/${product.id}`}>See More</Link>
+                        <p className='product-desc'>{product.description}</p>
                     </div>
-                </div>
-            </div>
+                <h3>${product.price}</h3>
+                <p className='envio-gratis'>Envio Gratis</p>
+            </Link>
         </div>
     )
 }

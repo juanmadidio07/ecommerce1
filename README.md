@@ -1,8 +1,24 @@
-# React + Vite
+# My First Ecommerce with ReactJS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is my first Ecommerce using ReactJs, Firebase, Bootstrap
+## Functionality
+- Navbar with Links to show products ordered by Category
+- Icon Cart to see Products added
+- Banner with Images 
++ List of products including 
+     + Image
+	 + Name
+	 + Price
+- Detail with Current Stock, Quantity, Add to Cart button
+- Cart with Product deatil, Checkout Form and Order generator
+-  Firestore to storage Products and Orders
+- Footer with Copyright Mark
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+### Installation
+
+Download it and run
+
+`$ npm install ` `$ npm run dev`
+

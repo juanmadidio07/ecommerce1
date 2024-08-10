@@ -1,33 +1,41 @@
-import { useState, useEffect } from "react"
-import { getProducts, getProductsByCategory } from "../../async-mocks"
 import { useParams } from "react-router-dom"
 import ProductList from "../ProductList/ProductList"
+import Footer from "../Footer/Footer"
+import Carousel from "../Carousel/Carousel"
+import './ItemListContainer.css'
+import { useNotification } from "../../context/NotificationContext"
+import { getProducts } from "../../services/firestore/products"
+import { useAsync } from "../../hooks/useAsync"
+
 
 const ItemListContainer = () => {
-  const [products, setProducts] = useState([])
-  const {category}  =  useParams()
-  
-  useEffect(()=>{
-      if(!category){
-          getProducts()
-              .then((res)=>{
-                  setProducts(res)
-              })
-              .catch((err)=>console.log(err))
-      }else {
-          getProductsByCategory(category)
-              .then((res)=>{
-                  setProducts(res)
-              })
-              .catch((err)=> console.log(err))
-      }
-  }, [category])
+  const { category } = useParams()
+  const { setNotification } = useNotification()
+  const asyncFunction = () => getProducts(category)
 
-return (
-  <div>
+  const {data: products, loading, error} = useAsync(asyncFunction, [category] )
+
+  if (loading) {
+    return (
+      <h3 className="loading">Cargando Productos...</h3>
+    );
+  }
+
+  if (error) {
+    return (
+      setNotification('danger', 'Error al Cargar Productos')
+    );
+  }
+
+
+  return (
+    <>
+      <Carousel />
       <ProductList products={products} />
-  </div>
-)
+      <Footer />
+    </>
+
+  )
 }
 
 export default ItemListContainer

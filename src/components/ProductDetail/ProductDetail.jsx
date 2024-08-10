@@ -1,46 +1,52 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCount from "../ProductCount/ProductCount";
+import { useCart } from "../../hooks/useCart"
+import { useNotification } from "../../context/NotificationContext";
+
 
 const ProductDetail = ({ name, img, description, stock, category, id, price }) => {
-    const [quantity, setQuantity] = useState(0)
+    const {addItem, isInCart} = useCart()
+    const {setNotification} = useNotification()
 
-    const handleAdd = (cantidad) => {
-        const objetToAdd = {
-            id, name, price
+    const handleAdd = (count) => {
+        const productObj = {
+            id, name, price, quantity : count
         }
-        console.log(objetToAdd)
-        console.log('agregue al carrito', cantidad)
-        setQuantity(cantidad)
+        addItem(productObj)
+        setNotification('success', `Se agregaron ${count} de ${name}`)
     }
 
     return (
-        <div className="container">
-            <h2>{name}</h2>
-            <div className="card align-items-center">
-                <img 
-                    src={img}
-                    style={{ width: 300 }}
-                    className="card-img-top"
-                    alt={name}
-                />
-                <div className="card-body">
-                    <p className="card-text">{description}</p>
-                    <p className="card-text">Categoria: {category}</p>
-                    <h2 className="card-text">Precio: $ {price}</h2>
-                    <h2 className="card-text">Disponible - {stock}</h2>
+        <article>
+            <div className="container mt-5">
+                <h2>{name}</h2>
+                <div className="grid card mb-3" style={{ maxwidth: "540rem" }}>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <img src={img} className="img-fluid rounded-start" alt={name} />
+                        </div>
+                        <div className="col-md-8">
+                            <div className="card-body">
+                                <h5 className="card-title">{name}</h5>
+                                <p className="card-text">{description}</p>
+                                <h2 className="card-text"><b>${price}</b></h2>
+                                <p>Cantidad Disponible: <b>{stock}</b></p>
+                            </div>
+                            <div className="mt-5">
+                                {
+                                    isInCart(id) ? (
+                                        <Link className="btn btn-primary d-block m-4" to='/cart'>Finalizar Compra</Link>
+                                    ) : (
+                                        
+                                        <ProductCount stock={stock} onAdd={handleAdd} />
+                                    )
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div>
-                {
-                    quantity === 0 ? (
-                        <ProductCount stock={stock} onAdd={handleAdd} />
-                    ) : (
-                        <Link className="btn btn-primary d-block m-4" to='/cart'>Finalizar Compra</Link>
-                    )
-                }
-            </div>
-        </div>
+        </article>
     );
 }
 

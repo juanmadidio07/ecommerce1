@@ -1,0 +1,11 @@
+.cardItem {
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+    padding: 80px;
+    margin-bottom: 30px;
+    font-size: 16px;
+    background-color: papayawhip;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+}
